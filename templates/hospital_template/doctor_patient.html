@@ -1,0 +1,478 @@
+{% extends "hospital_template/static.html" %}
+{% block body %}
+
+<main id="main" class="main">
+
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <!-- <h5 class="card-title">Patient List</h5> -->
+
+              <div class="col-lg-12 mt-3">
+          
+           <div class="card">
+            <div class="card-body">
+              <p>
+                <span></span>
+               <a href="/patient_id/{{next_patient_data.id}}"> <button type="submit" class="btn btn-primary" style="float:right">Next Appointment</button></a>
+              </p>
+              </br>
+              <!-- General Form Elements -->
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Patient Name</label>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" name="patient_name" value="{{patient_data.name}}" readonly>
+                  </div> 
+                  
+                  <label for="inputNumber" class="col-sm-1
+                  col-form-label">DOB</label> <div class="col-sm-2 mb-2">
+                  <input type="text" class="form-control" name="dob" value="{{patient_data.dob}}" readonly> </div>
+
+                  <label for="inputNumber" class="col-sm-1
+                  col-form-label">AGE</label> <div class="col-sm-1 mb-2">
+                  <input type="text" class="form-control" name="dob" value="{{age_}}" readonly> </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="inputPassword" class="col-sm-2 col-form-label">Address</label>
+                  <div class="col-sm-8">
+                    <textarea class="form-control" style="height: 100px" name="address" readonly>{{patient_data.address}}, {{patient_data.phone}}</textarea>
+                  </div>
+                </div>
+
+             </div>
+          </div>
+
+        <!-- </div> -->
+        <div class="col-lg-12">
+          <!-- Table with hoverable rows -->
+          <div style="max-height: 100%; overflow-y: auto;">
+            <table class="table table-hover display nowrap" style="width: 100%" id="example">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Patient Height</th>
+                  <th scope="col">Patient Weight</th>
+                  <th scope="col">Patient Temperature</th>
+                  <th scope="col">Nadi</th>
+                  <th scope="col">Spo2</th>
+                  <th scope="col">Bp</th>
+                  <th scope="col">Food restrictions</th>
+                  <th scope="col">Present Complaint</th>
+                  <th scope="col">Diagnosis</th>
+                  <th scope="col">Therapy</th>
+                  <th scope="col">Medicine</th>
+                  <th scope="col">Admission Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% set count = {'value': 1} %}
+                {% for i in ticket_data %}
+                <tr>
+                  <th>{{ count.value }}</th>
+                  <td>{% if i.patient_height == None %}No Data{% else %}{{ i.patient_height }}{% endif %}</td>
+                  <td>{% if i.patient_weight == None %}No Data{% else %}{{ i.patient_weight }}{% endif %}</td>
+                  <td>{% if i.patient_temperature == None %}No Data{% else %}{{ i.patient_temperature }}{% endif %}</td>
+                  <td>{% if i.nadi == None %}No Data{% else %}{{ i.nadi }}{% endif %}</td>
+                  <td>{% if i.spo2 == None %}No Data{% else %}{{ i.spo2 }}{% endif %}</td>
+                  <td>{% if i.bp == None %}No Data{% else %}{{ i.bp }}{% endif %}</td>
+                  <td>{% if i.food_restrictions == None %}No Data{% else %}{{ i.food_restrictions }}{% endif %}</td>
+                  <td>{% if i.present_complaint == None %}No Data{% else %}{{ i.present_complaint }}{% endif %}</td>
+                  <td>{% if i.diagnosis == None %}No Data{% else %}{{ i.diagnosis }}{% endif %}</td>
+                  <td>{% if i.therapy == None %}No Data{% else %}{{ i.therapy }}{% endif %}</td>
+                  <td>{% if i.medicines == None %}No Data{% else %}{{ i.medicines }}{% endif %}</td>
+                  <td>{{ i.admission_date }}</td>
+                </tr>
+                {% set _ = count.update({'value': count.value + 1}) %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+          </div>
+              <!-- End Table with hoverable rows -->
+        <form action="" method="POST">
+          <div class="row mb-3">
+            <label for="inputText" class="col-sm-2 col-form-label">Weight</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" name="weight" value="{% if ticket_data[0]['patient_weight'] != None %}{{ticket_data[0]['patient_weight']}}{% endif %}" >
+            </div>
+            <label for="inputText" class="col-sm-2 col-form-label" >Height</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" name="height"  value="{% if ticket_data[0]['patient_height'] != None %}{{ticket_data[0]['patient_height']}}{% endif %}" >
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputText" class="col-sm-2 col-form-label">Sp02</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" name="spo2"  value="{% if ticket_data[0]['spo2'] != None %}{{ticket_data[0]['spo2']}}{% endif %}" >
+            </div>
+            <label for="inputText" class="col-sm-2 col-form-label">Nadi</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" name="Nadi" value="{% if ticket_data[0]['nadi'] != None %}{{ticket_data[0]['nadi']}}{% endif %}" >
+            </div>
+          </div>  
+          <div class="row mb-3">
+            <label for="inputText" class="col-sm-2 col-form-label">Temperature</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" name="temperature"  value="{% if ticket_data[0]['patient_temperature'] != None %}{{ticket_data[0]['patient_temperature']}}{% endif %}" >
+            </div>
+            <label for="inputText" class="col-sm-2 col-form-label">Bp</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" name="bp"  value="{% if ticket_data[0]['bp'] != None %}{{ticket_data[0]['bp']}}{% endif %}" >
+            </div>
+          </div>
+          <div class="col-lg-12 mt-3">
+            
+            <div class="card">
+              <div class="card-body">
+              <!-- Table with hoverable rows -->
+                <center><button type="button" class="btn btn-warning btn-circle-lg mt-3" onclick="addRow('dataTable');" ><i class="fa fa-plus">Add Row</i></button>
+                  <button type="button" class="btn btn-info btn-circle-lg mt-3" data-toggle="modal" data-target="#myModal">
+                    Patient History
+                  </button>
+                  <br /><br /></center>
+                
+                                  <input type="hidden" id="rowcount" name="rowcount" value="1" size="10" />
+                  <table class="table table-responsive" border="1">
+                    <thead>
+                      <tr>
+                        <th scope="col">Medicine Name</th>
+                        <th scope="col">Morning</th>
+                        <th scope="col">Evening</th>
+                        <th scope="col">Night</th>
+                        <th scope="col">Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody  id="dataTable">
+                          <tr>
+                            <th><select id="medicinename_0" name="medicinename_0" class="form-control name_func"  style="width:300px" >
+                                                      <option value='0'>Select Item</option>
+                                                        {% for i in medicine_list %}
+                                                            <option value={{i.name}}>{{i.name}}</option>
+                                                        {% endfor %}
+                                                    </select></th>
+                            <td><input class="form-control" style="width: 80px;" size=5 type="text" step="any" name="morning_0" id="morning_0" value="" /></td>
+                            <td><input class="form-control" style="width: 80px;" size=5 type="text" step="any" name="evening_0" id="evening_0" value="" /></td>
+                            <td><input class="form-control" style="width: 80px;" size=5 type="text" step="any" name="night_0" id="night_0" value="" /></td>
+                            <td><button type="button" class="btn btn-danger btn-circle-lg" onclick="deleteRow(this);" ><i class="fa fa-times">Delete row</i></button></a></td>
+                          </tr>
+                    </tbody>
+                  </table>
+                <!-- End Table with hoverable rows -->
+                <div class="row mb-3">
+                  <label for="inputPassword" class="col-sm-2 col-form-label">Description:</label>
+                  <div class="col-sm-4">
+                    <textarea class="form-control" style="height: 60px" name="description"></textarea>
+                  </div>
+                  <label for="inputPassword" class="col-sm-2 col-form-label">Food restrictions:</label>
+                  <div class="col-sm-4">
+                    <textarea class="form-control" style="height: 60px" name="food_restrictions"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="inputPassword" class="col-sm-2 col-form-label">Drug Allergy:</label>
+              <div class="col-sm-4">
+                <textarea class="form-control" style="height: 60px" name="drug_allergy">{% if patient_data["drug_allergy"] != None %}{{patient_data["drug_allergy"]}}{% endif %}</textarea>
+              </div>
+              <label for="inputPassword" class="col-sm-2 col-form-label">Family history:</label>
+              <div class="col-sm-4">
+                <textarea class="form-control" style="height: 60px" name="family_history">{% if patient_data["family_history"] != None %}{{patient_data["family_history"]}}{% endif %}</textarea>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="inputPassword" class="col-sm-2 col-form-label">Present Complaint:</label>
+              <div class="col-sm-4">
+                <textarea class="form-control" style="height: 60px" name="present_complaint"></textarea>
+              </div>
+              <label for="inputPassword" class="col-sm-2 col-form-label">Diagnosis:</label>
+              <div class="col-sm-4">
+                <textarea class="form-control" style="height: 60px" name="diagnosis"></textarea>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="inputPassword" class="col-sm-2 col-form-label">Therapy:</label>
+              <div class="col-sm-4">
+                <textarea class="form-control" style="height: 60px" name="therapy"></textarea>
+              </div>
+              <label for="inputPassword" class="col-sm-2 col-form-label">Medicines:</label>
+              <div class="col-sm-4">
+                <textarea class="form-control" style="height: 60px" name="medicines"></textarea>
+              </div>
+            </div>
+
+
+          </div>
+          <center>
+            <!-- <button type="submit" class="btn btn-danger">Cancel Booking</button> -->
+
+            <button type="submit" class="btn btn-success">Next to pharmacy</button>
+          </center>
+        </form>
+        </div>
+      </div>
+    </section>
+    
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog" style="max-width: 800px;">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Patient History</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+        <table class="table table-bordered table-responsive" border="1">
+          <thead>
+            <tr>
+              <th>Drug Allergy</th>
+              <th>Family History</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{%if (patient_data["drug_allergy"]==None)or(patient_data["drug_allergy"]=="")%}No Data{%else%}{{patient_data["drug_allergy"]}}{%endif%}</td>
+              <td>{%if (patient_data.family_history==None) or (patient_data.family_history=="")%}No Data{%else%}{{patient_data.family_history}}{%endif%}</td>
+            </tr>
+          </tbody>
+          <table class="table table-bordered table-responsive datatable" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Created On</th>
+                    <th>Description</th>
+                    <th>Medicine Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in prescription_data %}
+                <tr>
+                    <td>{{ entry.id }}</td>
+                    <td>{{ entry.created_on.strftime('%Y-%m-%d') }}</td> 
+                    <td>{% if entry.description==None%}No Data{%else%}{{ entry.description }}{%endif%}</td>
+                    <td>
+                        <table class="table table-bordered" border="1" >
+                            <thead>
+                                <tr>
+                                    <th>Medicine Name<br></th>
+                                    <th>Morning</th>
+                                    <th>Evening</th>
+                                    <th>Night</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for med_data in entry.info.medicine_data %}
+                                  {% if med_data.medicinename != '0' %}
+                                  <tr>
+                                      <td>{{ med_data.medicinename }}</td>
+                                      <td>{{ med_data.morning }}</td>
+                                      <td>{{ med_data.evening }}</td>
+                                      <td>{{ med_data.night }}</td>
+                                  </tr>
+                                  {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script>
+  new DataTable('#example');
+  responsive: true;
+  scrollX: true
+</script>
+
+  </main><!-- End #main -->
+
+<script type="text/javascript">
+      $(document).ready(function(){
+   
+        // Initialize select2
+        $("#medicinename_0").select2();
+
+      });
+</script>
+  <script type="text/javascript">
+    var item_id = 0;
+
+    function addRow(dataTable) {
+
+        item_id++;
+
+        var table = document.getElementById(dataTable);
+
+        var rowCount = table.rows.length;
+        // alert(rowcount)
+        var row = table.insertRow(rowCount);
+        document.getElementById("rowcount").value = parseInt(item_id + 1);
+        // row.id = item_id .toString();
+        // item_id ++;
+
+        var colCount = table.rows[0].cells.length;
+
+        console.log("Column count: " + colCount);
+            // style="display: none;"
+        for (var i = 0; i < colCount; i++) {
+
+            var newcell = row.insertCell(i);
+            if(i==0)
+            {
+                
+               newcell.innerHTML= `<select id="medicinename_${item_id}" name="medicinename_${item_id}" class="form-control name_func"   style="width:300px" >
+                      <option value='0'>Select Item</option>
+                            {% for i in medicine_list %}
+                            <option value="{{i.name}}">{{i.name}}</option>
+                            {% endfor %}
+                    </select></td>`
+                    $("#medicinename_"+item_id).select2();
+            }
+            else
+            {
+
+                    newcell.innerHTML = table.rows[0].cells[i].innerHTML;
+                    
+            }
+            console.log(newcell.childNodes);
+                    //alert(newcell.childNodes);
+                    switch (newcell.childNodes[0].type) {
+                        case "text":
+                            newcell.childNodes[0].value = "";
+                            newcell.childNodes[0].id = newcell.childNodes[0].id.split("_")[0] + "_" + item_id;
+                            newcell.childNodes[0].name = newcell.childNodes[0].name.split("_")[0] + "_" + item_id;
+                            // newcell.childNodes[0].value = 0;
+                            break;
+                        case "number":
+                            newcell.childNodes[0].value = "";
+                            newcell.childNodes[0].id = newcell.childNodes[0].id.split("_")[0] + "_" + item_id;
+                            newcell.childNodes[0].name = newcell.childNodes[0].name.split("_")[0] + "_" + item_id;
+                            // newcell.childNodes[0].value = 0;
+                            break;
+                        case "hidden":
+                            newcell.childNodes[0].value = "";
+                            newcell.childNodes[0].id = newcell.childNodes[0].id.split("_")[0] + "_" + item_id;
+                            newcell.childNodes[0].name = newcell.childNodes[0].name.split("_")[0] + "_" + item_id;
+                            // newcell.childNodes[0].value = 0;
+                            break;
+                        case "checkbox":
+                            newcell.childNodes[0].checked = false;
+                            newcell.childNodes[0].id = newcell.childNodes[0].id.split("_")[0] + "_" + item_id;
+                            newcell.childNodes[0].name = newcell.childNodes[0].name.split("_")[0] + "_" + item_id;
+                            break;
+                        case "select-one":
+                            newcell.childNodes[0].selectedIndex = 0;
+                            newcell.childNodes[0].id = newcell.childNodes[0].id.split("_")[0] + "_" + item_id;
+                            newcell.childNodes[0].name = newcell.childNodes[0].name.split("_")[0] + "_" + item_id;
+                           
+                                // $("#unit_"+item_id).select2();
+                                // $("#"+newcell.childNodes[0].id).select2();
+                            
+                            break;
+                        case "button":
+                            newcell.childNodes[0].selectedIndex = 0;
+                            newcell.childNodes[0].id = newcell.childNodes[0].id.split("_")[0] + "_" + item_id;
+                            newcell.childNodes[0].name = newcell.childNodes[0].name.split("_")[0] + "_" + item_id;
+                            break;
+                    }
+                }
+
+        hide_increment();
+        reset_rows();
+    }
+
+    function deleteRow(row) {
+        try {
+
+            var table = document.getElementById('dataTable');
+            var rowCount = table.rows.length;
+            // alert(rowCount)
+
+            if (rowCount <= 1) {
+                alert("cant delete first row");
+            } else {
+
+                var del = row.parentNode.parentNode;
+                var del1 = del.parentNode.removeChild(del);
+            }
+
+            // reset_rows();
+
+        } catch (e) {
+            alert(e);
+        }
+    }
+</script>
+                            
+        
+  <script>
+      jQuery(document).ready(function() {
+      jQuery(".standardSelect").chosen({
+          disable_search_threshold: 10,
+          no_results_text: "Oops, nothing found!",
+          width: "100%"
+      });
+  });
+  </script>
+
+  <!-- Add Bootstrap CSS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  new DataTable('#example');
+  scrollX: true;
+</script>
+                                <!-- Select2 CSS --> 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> 
+
+<!-- jQuery --> <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+
+<!-- Select2 JS --> 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+  
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+<!-- Vendor JS Files -->
+<script src="/static/assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/assets/vendor/chart.js/chart.umd.js"></script>
+<script src="/static/assets/vendor/echarts/echarts.min.js"></script>
+<script src="/static/assets/vendor/quill/quill.min.js"></script>
+<script src="/static/assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="/static/assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="/static/assets/vendor/php-email-form/validate.js"></script>
+ <!-- Template Main JS File -->
+ <script src="/static/assets/js/main.js"></script>
+        {% endblock %}
+ 
